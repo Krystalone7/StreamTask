@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="PersonTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-11-02T16:23:23" hostname="NEWPC" time="0.045">
+  <properties/>
+  <testcase name="filterBySurnameIvanov()" classname="PersonTest" time="0.042"/>
+  <testcase name="filterByNameArtem()" classname="PersonTest" time="0.002"/>
+  <system-out><![CDATA[[Petr Ivanov 2002-11-20 MALE, Artem Ivanov 2002-11-07 MALE]
+[Petr Ivanov 2002-11-20 MALE, Artem Ivanov 2002-11-07 MALE]
+[Artem Brown 2012-01-25 MALE, Artem Ivanov 2002-11-07 MALE]
+[Artem Brown 2012-01-25 MALE, Artem Ivanov 2002-11-07 MALE]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
