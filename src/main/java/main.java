@@ -1,21 +1,10 @@
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class PersonTest {
-
-    private List<Person> persons ;
-
-    @BeforeEach
-    public void setUp(){
-        persons = new ArrayList<>();
+public class main {
+    public static void main(String[] args) {
+        List<Person> persons = new ArrayList<>();
         persons.add(new Person("Petr", "Ivanov", LocalDate.of(2002, 11, 20), Gender.MALE));
         persons.add(new Person("Artem", "Brown", LocalDate.of(2012, 1, 25), Gender.MALE));
         persons.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
@@ -30,13 +19,4 @@ class PersonTest {
             System.out.println(person);
         }
     }
-
-    @Test
-    public void filterByNameArtem(){
-
-    }
-
-
-
-
 }

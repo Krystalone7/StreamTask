@@ -5,13 +5,13 @@ public class Person {
     private final String name;
     private final String surname;
     private final LocalDate date;
-    private final String sex;
+    private final Gender gender;
 
-    public Person(String name, String surname, LocalDate date, String sex) {
+    public Person(String name, String surname, LocalDate date, Gender gender) {
         this.name = name;
         this.surname = surname;
         this.date = date;
-        this.sex = sex;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -26,13 +26,13 @@ public class Person {
         return date;
     }
 
-    public String getSex() {
-        return sex;
+    public Gender getGender() {
+        return gender;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, sex, date.getMonth(), date.getYear(), date.getDayOfMonth());
+        return Objects.hash(name, surname, gender, date.getMonth(), date.getYear(), date.getDayOfMonth());
     }
 
     @Override
@@ -40,14 +40,16 @@ public class Person {
         if (obj == null){
             return false;
         }
-        if (obj.hashCode() == hashCode()){
-            if (obj)
+        if (obj instanceof Person) {
+            if (obj.hashCode() == hashCode()) {
+                return ((Person) obj).name.equals(name) && ((Person) obj).surname.equals(surname) && ((Person) obj).date.equals(date) && ((Person) obj).gender.equals(gender);
+            }
         }
         return false;
     }
 
     @Override
     public String toString() {
-        return name + " " + surname + " " + date + " " + sex;
+        return name + " " + surname + " " + date + " " + gender;
     }
 }
