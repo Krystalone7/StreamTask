@@ -25,9 +25,6 @@ class PersonTest {
         persons.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
         persons.add(new Person("Julia", "Orlova", LocalDate.of(2002, 4, 5), Gender.FEMALE));
         persons.add(new Person("Daria", "Simonova", LocalDate.of(2002, 5, 7), Gender.FEMALE));
-        //for (Person person: persons){
-        //    System.out.println(person);
-        //}
     }
 
     @Test
@@ -38,8 +35,8 @@ class PersonTest {
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Artem", "Brown", LocalDate.of(2012, 1, 25), Gender.MALE));
         expected.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
-        System.out.println(expected);
-        System.out.println(filteredPersons);
+        //System.out.println(expected);
+        //System.out.println(filteredPersons);
         assertIterableEquals(expected, filteredPersons);
     }
 
@@ -51,16 +48,56 @@ class PersonTest {
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Petr", "Ivanov", LocalDate.of(2002, 11, 20), Gender.MALE));
         expected.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
-        System.out.println(expected);
-        System.out.println(filteredPersons);
+        //System.out.println(expected);
+        //System.out.println(filteredPersons);
         assertIterableEquals(expected, filteredPersons);
     }
 
     @Test
     public void filterByNameJenyaAndSurnameAlekseev(){
-
+        Map<String, String> criteria = new HashMap<>();
+        criteria.put("surname", "Alekseev");
+        criteria.put("name", "Jenya");
+        List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
+        List<Person> expected = new ArrayList<>();
+        expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2002, 12, 12), Gender.MALE));
+        expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2013, 4, 5), Gender.MALE));
+        //System.out.println(expected);
+        //System.out.println(filteredPersons);
+        assertIterableEquals(expected, filteredPersons);
     }
 
+    @Test
+    public void filterByGenderFEMALE(){
+        Map<String, String> criteria = new HashMap<>();
+        criteria.put("gender", "FEMALE");
+        List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
+        List<Person> expected = new ArrayList<>();
+        expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
+        expected.add(new Person("Julia", "Orlova", LocalDate.of(2002, 4, 5), Gender.FEMALE));
+        expected.add(new Person("Daria", "Simonova", LocalDate.of(2002, 5, 7), Gender.FEMALE));
+        //System.out.println(expected);
+        //System.out.println(filteredPersons);
+        assertIterableEquals(expected, filteredPersons);
+    }
+
+    @Test
+    public void filterFEMALESortName(){
+        Map<String, String> criteriaFilter = new HashMap<>();
+        criteriaFilter.put("gender", "FEMALE");
+        List<Person> filteredPersons = FilterPerson.filter(persons, criteriaFilter);
+        Map<String, String> criteriaSort = new HashMap<>();
+        criteriaSort.put("surname", "asc");
+        List<Person> sortedPersons = SortPerson.sort(filteredPersons, criteriaSort);
+        List<Person> expected = new ArrayList<>();
+        expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
+        expected.add(new Person("Daria", "Simonova", LocalDate.of(2002, 5, 7), Gender.FEMALE));
+        expected.add(new Person("Julia", "Orlova", LocalDate.of(2002, 4, 5), Gender.FEMALE));
+        System.out.println(filteredPersons);
+        System.out.println(expected);
+        System.out.println(sortedPersons);
+        assertIterableEquals(expected, sortedPersons);
+    }
 
 
 
