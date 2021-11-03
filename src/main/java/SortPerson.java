@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -6,43 +7,55 @@ import java.util.stream.Collectors;
 public class SortPerson {
     public static List<Person> sort(List<Person> persons, Map<String, String> criteria){
         for (String criterion: criteria.keySet()) {
-            if (criteria.get(criterion).equals("asc")){
+            if(criteria.get(criterion).equals("asc")) {
                 switch (criterion) {
                     case "name":
                         persons = persons.stream()
-                                .sorted(Comparator.comparing(Person::getName).reversed())
+                                .sorted(Comparator.comparing(Person::getName))
                                 .collect(Collectors.toList());
+                        break;
                     case "surname":
                         persons = persons.stream()
                                 .sorted(Comparator.comparing(Person::getSurname))
                                 .collect(Collectors.toList());
+                        break;
                     case "date":
                         persons = persons.stream()
                                 .sorted(Comparator.comparing(Person::getDate))
                                 .collect(Collectors.toList());
+                        break;
                     case "gender":
                         persons = persons.stream()
                                 .sorted(Comparator.comparing(Person::getGender))
                                 .collect(Collectors.toList());
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + criterion);
                 }
-            } else if (criteria.get(criterion).equals("des")){
+            } else if (criteria.get(criterion).equals("des")) {
                 switch (criterion) {
                     case "name":
                         persons = persons.stream()
                                 .sorted(Comparator.comparing(Person::getName).reversed())
                                 .collect(Collectors.toList());
+                        break;
                     case "surname":
                         persons = persons.stream()
-                                .sorted((o1, o2) -> o2.getSurname().compareTo(o1.getSurname()))
+                                .sorted(Comparator.comparing(Person::getSurname).reversed())
                                 .collect(Collectors.toList());
+                        break;
                     case "date":
                         persons = persons.stream()
-                                .sorted((o1, o2) -> o2.getDate().compareTo(o1.getDate()))
+                                .sorted(Comparator.comparing(Person::getDate).reversed())
                                 .collect(Collectors.toList());
+                        break;
                     case "gender":
                         persons = persons.stream()
-                                .sorted((o1, o2) -> o2.getGender().compareTo(o1.getGender()))
+                                .sorted(Comparator.comparing(Person::getGender).reversed())
                                 .collect(Collectors.toList());
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + criterion);
                 }
             }
         }

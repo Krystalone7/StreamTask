@@ -87,7 +87,7 @@ class PersonTest {
         criteriaFilter.put("gender", "FEMALE");
         List<Person> filteredPersons = FilterPerson.filter(persons, criteriaFilter);
         Map<String, String> criteriaSort = new HashMap<>();
-        criteriaSort.put("surname", "asc");
+        criteriaSort.put("name", "asc");
         List<Person> sortedPersons = SortPerson.sort(filteredPersons, criteriaSort);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
