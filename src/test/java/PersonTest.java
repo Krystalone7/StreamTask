@@ -35,8 +35,6 @@ class PersonTest {
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Artem", "Brown", LocalDate.of(2012, 1, 25), Gender.MALE));
         expected.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
-        //System.out.println(expected);
-        //System.out.println(filteredPersons);
         assertIterableEquals(expected, filteredPersons);
     }
 
@@ -48,8 +46,6 @@ class PersonTest {
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Petr", "Ivanov", LocalDate.of(2002, 11, 20), Gender.MALE));
         expected.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
-        //System.out.println(expected);
-        //System.out.println(filteredPersons);
         assertIterableEquals(expected, filteredPersons);
     }
 
@@ -62,8 +58,6 @@ class PersonTest {
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2002, 12, 12), Gender.MALE));
         expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2013, 4, 5), Gender.MALE));
-        //System.out.println(expected);
-        //System.out.println(filteredPersons);
         assertIterableEquals(expected, filteredPersons);
     }
 
@@ -76,8 +70,6 @@ class PersonTest {
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
         expected.add(new Person("Julia", "Orlova", LocalDate.of(2002, 4, 5), Gender.FEMALE));
         expected.add(new Person("Daria", "Simonova", LocalDate.of(2002, 5, 7), Gender.FEMALE));
-        //System.out.println(expected);
-        //System.out.println(filteredPersons);
         assertIterableEquals(expected, filteredPersons);
     }
 
@@ -93,9 +85,26 @@ class PersonTest {
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
         expected.add(new Person("Daria", "Simonova", LocalDate.of(2002, 5, 7), Gender.FEMALE));
         expected.add(new Person("Julia", "Orlova", LocalDate.of(2002, 4, 5), Gender.FEMALE));
-        System.out.println(filteredPersons);
-        System.out.println(expected);
-        System.out.println(sortedPersons);
+        assertIterableEquals(expected, sortedPersons);
+    }
+
+    @Test
+    public void sortBySurnamesDescending(){
+        Map<String, String> criteriaSort = new HashMap<>();
+        criteriaSort.put("surname", "des");
+        List<Person> sortedPersons = SortPerson.sort(persons, criteriaSort);
+        List<Person> expected = new ArrayList<>();
+        expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
+        expected.add(new Person("Daria", "Simonova", LocalDate.of(2002, 5, 7), Gender.FEMALE));
+        expected.add(new Person("Nikita", "Sidorov", LocalDate.of(2002, 8, 5), Gender.MALE));
+        expected.add(new Person("Julia", "Orlova", LocalDate.of(2002, 4, 5), Gender.FEMALE));
+        expected.add(new Person("Slava", "Lomakin", LocalDate.of(2002, 11, 15), Gender.MALE));
+        expected.add(new Person("Elisey", "Kuznetzov", LocalDate.of(2002, 3, 8), Gender.MALE));
+        expected.add(new Person("Petr", "Ivanov", LocalDate.of(2002, 11, 20), Gender.MALE));
+        expected.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
+        expected.add(new Person("Artem", "Brown", LocalDate.of(2012, 1, 25), Gender.MALE));
+        expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2002, 12, 12), Gender.MALE));
+        expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2013, 4, 5), Gender.MALE));
         assertIterableEquals(expected, sortedPersons);
     }
 

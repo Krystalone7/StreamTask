@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="PersonTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-03T06:49:06" hostname="NEWPC" time="0.041">
+<testsuite name="PersonTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-11-03T06:57:52" hostname="NEWPC" time="0.041">
   <properties/>
-  <testcase name="filterFEMALESortName()" classname="PersonTest" time="0.041"/>
-  <system-out><![CDATA[[Anna Volkova 2002-07-06 FEMALE, Julia Orlova 2002-04-05 FEMALE, Daria Simonova 2002-05-07 FEMALE]
-[Anna Volkova 2002-07-06 FEMALE, Daria Simonova 2002-05-07 FEMALE, Julia Orlova 2002-04-05 FEMALE]
-[Anna Volkova 2002-07-06 FEMALE, Daria Simonova 2002-05-07 FEMALE, Julia Orlova 2002-04-05 FEMALE]
-]]></system-out>
+  <testcase name="sortBySurnamesDescending()" classname="PersonTest" time="0.041"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
