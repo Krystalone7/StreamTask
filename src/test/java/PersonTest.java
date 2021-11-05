@@ -1,4 +1,11 @@
 
+import classes.Field;
+import classes.Gender;
+import classes.Person;
+import classes.SortFactor;
+import functions.FilterPerson;
+import functions.Pagination;
+import functions.SortPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,8 +36,8 @@ class PersonTest {
 
     @Test
     public void filterByNameArtem(){
-        Map<String, String> criteria = new HashMap<>();
-        criteria.put("name", "Artem");
+        Map<Field, String> criteria = new HashMap<>();
+        criteria.put(Field.NAME, "Artem");
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Artem", "Brown", LocalDate.of(2012, 1, 25), Gender.MALE));
@@ -40,8 +47,8 @@ class PersonTest {
 
     @Test
     public void filterBySurnameIvanov(){
-        Map<String, String> criteria = new HashMap<>();
-        criteria.put("surname", "Ivanov");
+        Map<Field, String> criteria = new HashMap<>();
+        criteria.put(Field.SURNAME, "Ivanov");
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Petr", "Ivanov", LocalDate.of(2002, 11, 20), Gender.MALE));
@@ -51,9 +58,9 @@ class PersonTest {
 
     @Test
     public void filterByNameJenyaAndSurnameAlekseev(){
-        Map<String, String> criteria = new HashMap<>();
-        criteria.put("surname", "Alekseev");
-        criteria.put("name", "Jenya");
+        Map<Field, String> criteria = new HashMap<>();
+        criteria.put(Field.SURNAME, "Alekseev");
+        criteria.put(Field.NAME, "Jenya");
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2002, 12, 12), Gender.MALE));
@@ -63,8 +70,8 @@ class PersonTest {
 
     @Test
     public void filterByGenderFEMALE(){
-        Map<String, String> criteria = new HashMap<>();
-        criteria.put("gender", "FEMALE");
+        Map<Field, String> criteria = new HashMap<>();
+        criteria.put(Field.GENDER, "FEMALE");
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
@@ -74,12 +81,12 @@ class PersonTest {
     }
 
     @Test
-    public void filterFEMALESortName(){
-        Map<String, String> criteriaFilter = new HashMap<>();
-        criteriaFilter.put("gender", "FEMALE");
+    public void filterFEMALESortNameAscending(){
+        Map<Field, String> criteriaFilter = new HashMap<>();
+        criteriaFilter.put(Field.GENDER, "FEMALE");
         List<Person> filteredPersons = FilterPerson.filter(persons, criteriaFilter);
-        Map<String, String> criteriaSort = new HashMap<>();
-        criteriaSort.put("name", "asc");
+        Map<Field, SortFactor> criteriaSort = new HashMap<>();
+        criteriaSort.put(Field.NAME, SortFactor.ASC);
         List<Person> sortedPersons = SortPerson.sort(filteredPersons, criteriaSort);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
@@ -90,8 +97,8 @@ class PersonTest {
 
     @Test
     public void sortBySurnamesDescending(){
-        Map<String, String> criteriaSort = new HashMap<>();
-        criteriaSort.put("surname", "des");
+        Map<Field, SortFactor> criteriaSort = new HashMap<>();
+        criteriaSort.put(Field.SURNAME, SortFactor.DES);
         List<Person> sortedPersons = SortPerson.sort(persons, criteriaSort);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
@@ -108,6 +115,17 @@ class PersonTest {
         assertIterableEquals(expected, sortedPersons);
     }
 
-
+    @Test
+    public void paginate3Count3Page(){
+        int countOnPage = 3;
+        int page = 3;
+        List<Person> paginated = Pagination.paginate(persons, countOnPage, page);
+        List<Person> expected = new ArrayList<>();
+        expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2013, 4, 5), Gender.MALE));
+        expected.add(new Person("Slava", "Lomakin", LocalDate.of(2002, 11, 15), Gender.MALE));
+        expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
+        System.out.println(paginated);
+        assertIterableEquals(expected, paginated);
+    }
 
 }
