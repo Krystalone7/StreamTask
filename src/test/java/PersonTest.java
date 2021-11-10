@@ -36,9 +36,9 @@ class PersonTest {
 
     @Test
     public void filterByNameArtem(){
-        Map<Field, Predicate<Person>> criteria = new HashMap<>();
-        criteria.put(Field.NAME, (o1) -> Objects.equals(o1.getName(), "Artem"));
-        List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
+        FilterPerson filterPerson = new FilterPerson();
+        filterPerson.putCriterion(Field.NAME, "Artem");
+        List<Person> filteredPersons = FilterPerson.filter(persons);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Artem", "Brown", LocalDate.of(2012, 1, 25), Gender.MALE));
         expected.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
@@ -47,9 +47,9 @@ class PersonTest {
 
     @Test
     public void filterBySurnameIvanov(){
-        Map<Field, Predicate<Person>> criteria = new HashMap<>();
-        criteria.put(Field.SURNAME, (o1) -> o1.getSurname().equals("Ivanov"));
-        List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
+        FilterPerson filterPerson = new FilterPerson();
+        filterPerson.putCriterion(Field.SURNAME, "Ivanov");
+        List<Person> filteredPersons = FilterPerson.filter(persons);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Petr", "Ivanov", LocalDate.of(2002, 11, 20), Gender.MALE));
         expected.add(new Person("Artem", "Ivanov", LocalDate.of(2002, 11, 7), Gender.MALE));
@@ -58,10 +58,10 @@ class PersonTest {
 
     @Test
     public void filterByNameJenyaAndSurnameAlekseev(){
-        Map<Field, Predicate<Person>> criteria = new HashMap<>();
-        criteria.put(Field.SURNAME, (o1) -> o1.getSurname().equals("Alekseev"));
-        criteria.put(Field.NAME, (o1) -> o1.getName().equals("Jenya"));
-        List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
+        FilterPerson filterPerson = new FilterPerson();
+        filterPerson.putCriterion(Field.NAME, "Jenya");
+        filterPerson.putCriterion(Field.SURNAME, "Alekseev");
+        List<Person> filteredPersons = FilterPerson.filter(persons);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2002, 12, 12), Gender.MALE));
         expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2013, 4, 5), Gender.MALE));
@@ -70,9 +70,9 @@ class PersonTest {
 
     @Test
     public void filterByGenderFEMALE(){
-        Map<Field, Predicate<Person>> criteria = new HashMap<>();
-        criteria.put(Field.GENDER, (o1) -> o1.getGender().equals(Gender.FEMALE));
-        List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
+        FilterPerson filterPerson = new FilterPerson();
+        filterPerson.putCriterion(Field.GENDER, "FEMALE");
+        List<Person> filteredPersons = FilterPerson.filter(persons);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
         expected.add(new Person("Julia", "Orlova", LocalDate.of(2002, 4, 5), Gender.FEMALE));
@@ -82,9 +82,9 @@ class PersonTest {
 
     @Test
     public void filterFEMALESortNameAscending(){
-        Map<Field, Predicate<Person>> criteriaFilter = new HashMap<>();
-        criteriaFilter.put(Field.GENDER, (o1) -> o1.getGender().equals(Gender.FEMALE));
-        List<Person> filteredPersons = FilterPerson.filter(persons, criteriaFilter);
+        FilterPerson filterPerson = new FilterPerson();
+        filterPerson.putCriterion(Field.GENDER, "FEMALE");
+        List<Person> filteredPersons = FilterPerson.filter(persons);
 
         Map<Field, Comparator<Person>> criteriaSort = new HashMap<>();
         //Ascending
