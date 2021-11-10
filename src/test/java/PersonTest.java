@@ -1,16 +1,17 @@
 
-import classes.Field;
-import classes.Gender;
-import classes.Person;
-import classes.SortFactor;
-import functions.FilterPerson;
-import functions.Pagination;
-import functions.SortPerson;
+import org.example.streamtask.classes.Field;
+import org.example.streamtask.classes.Gender;
+import org.example.streamtask.classes.Person;
+import org.example.streamtask.classes.SortFactor;
+import org.example.streamtask.functions.FilterPerson;
+import org.example.streamtask.functions.Pagination;
+import org.example.streamtask.functions.SortPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,8 +37,8 @@ class PersonTest {
 
     @Test
     public void filterByNameArtem(){
-        Map<Field, String> criteria = new HashMap<>();
-        criteria.put(Field.NAME, "Artem");
+        Map<Field, Predicate<Person>> criteria = new HashMap<>();
+        criteria.put(Field.NAME, (o1) -> Objects.equals(o1.getName(), "Artem"));
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Artem", "Brown", LocalDate.of(2012, 1, 25), Gender.MALE));
@@ -47,8 +48,8 @@ class PersonTest {
 
     @Test
     public void filterBySurnameIvanov(){
-        Map<Field, String> criteria = new HashMap<>();
-        criteria.put(Field.SURNAME, "Ivanov");
+        Map<Field, Predicate<Person>> criteria = new HashMap<>();
+        criteria.put(Field.SURNAME, (o1) -> o1.getSurname().equals("Ivanov"));
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Petr", "Ivanov", LocalDate.of(2002, 11, 20), Gender.MALE));
@@ -58,9 +59,9 @@ class PersonTest {
 
     @Test
     public void filterByNameJenyaAndSurnameAlekseev(){
-        Map<Field, String> criteria = new HashMap<>();
-        criteria.put(Field.SURNAME, "Alekseev");
-        criteria.put(Field.NAME, "Jenya");
+        Map<Field, Predicate<Person>> criteria = new HashMap<>();
+        criteria.put(Field.SURNAME, (o1) -> o1.getSurname().equals("Alekseev"));
+        criteria.put(Field.NAME, (o1) -> o1.getName().equals("Jenya"));
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Jenya", "Alekseev", LocalDate.of(2002, 12, 12), Gender.MALE));
@@ -70,8 +71,8 @@ class PersonTest {
 
     @Test
     public void filterByGenderFEMALE(){
-        Map<Field, String> criteria = new HashMap<>();
-        criteria.put(Field.GENDER, "FEMALE");
+        Map<Field, Predicate<Person>> criteria = new HashMap<>();
+        criteria.put(Field.GENDER, (o1) -> o1.getGender().equals(Gender.FEMALE));
         List<Person> filteredPersons = FilterPerson.filter(persons, criteria);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
@@ -82,11 +83,14 @@ class PersonTest {
 
     @Test
     public void filterFEMALESortNameAscending(){
-        Map<Field, String> criteriaFilter = new HashMap<>();
-        criteriaFilter.put(Field.GENDER, "FEMALE");
+        Map<Field, Predicate<Person>> criteriaFilter = new HashMap<>();
+        criteriaFilter.put(Field.GENDER, (o1) -> o1.getGender().equals(Gender.FEMALE));
         List<Person> filteredPersons = FilterPerson.filter(persons, criteriaFilter);
-        Map<Field, SortFactor> criteriaSort = new HashMap<>();
-        criteriaSort.put(Field.NAME, SortFactor.ASC);
+
+        Map<Field, Comparator<Person>> criteriaSort = new HashMap<>();
+        //Ascending
+        criteriaSort.put(Field.NAME, (Comparator.comparing(Person::getName)));
+
         List<Person> sortedPersons = SortPerson.sort(filteredPersons, criteriaSort);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
@@ -97,8 +101,8 @@ class PersonTest {
 
     @Test
     public void sortBySurnamesDescending(){
-        Map<Field, SortFactor> criteriaSort = new HashMap<>();
-        criteriaSort.put(Field.SURNAME, SortFactor.DES);
+        Map<Field, Comparator<Person>> criteriaSort = new HashMap<>();
+        criteriaSort.put(Field.SURNAME, (Comparator.comparing(Person::getSurname).reversed()));
         List<Person> sortedPersons = SortPerson.sort(persons, criteriaSort);
         List<Person> expected = new ArrayList<>();
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
@@ -125,6 +129,13 @@ class PersonTest {
         expected.add(new Person("Slava", "Lomakin", LocalDate.of(2002, 11, 15), Gender.MALE));
         expected.add(new Person("Anna", "Volkova", LocalDate.of(2002, 7, 6), Gender.FEMALE));
         System.out.println(paginated);
+
+        // Такой момент - ты и после фильтрации, и после сортировки сравниваешь коллекции методом assertIterableEquals,
+        // а по идее, в случае с фильтрацией нам важно, чтобы набор элементов был ожидаемым, а в случае с сортировкой -
+        // чтобы элементы в коллекциях были в нужном порядке.
+        // Нужно разобраться, как сравнивать коллекции поэлементно с учетом порядка и без.
+        // Мы обычно используем org.assertj.core.api.AbstractIterableAssert#containsExactlyInAnyOrderElementsOf для сравнения
+        // коллекций без учета их порядка, посмотри также еще и метод сравнения, который учитывает порядок элементов
         assertIterableEquals(expected, paginated);
     }
 

@@ -1,5 +1,10 @@
 # Project exclude paths
 /.gradle/
-/build/classes/java/main/
-/build/classes/java/test/
+/build/
 /.idea/
+/gradlew/
+
+
+
+# Папки с билдом, gradle wrapper и .idea не должны попадать в проект полностью,
+# также не должны попадать файлы gradlew, сгенерированные Гредлом, и все генерируемые объекты - .class и так далее

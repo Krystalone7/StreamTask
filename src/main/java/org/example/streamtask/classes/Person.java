@@ -1,4 +1,4 @@
-package classes;
+package org.example.streamtask.classes;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -6,13 +6,13 @@ import java.util.Objects;
 public class Person {
     private final String name;
     private final String surname;
-    private final LocalDate date;
+    private final LocalDate birthDate;
     private final Gender gender;
 
-    public Person(String name, String surname, LocalDate date, Gender gender) {
+    public Person(String name, String surname, LocalDate birthDate, Gender gender) {
         this.name = name;
         this.surname = surname;
-        this.date = date;
+        this.birthDate = birthDate;
         this.gender = gender;
     }
 
@@ -24,8 +24,8 @@ public class Person {
         return surname;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     public Gender getGender() {
@@ -34,7 +34,10 @@ public class Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, gender, date.getMonth(), date.getYear(), date.getDayOfMonth());
+        if (birthDate == null){
+            throw new NullPointerException();
+        }
+        return Objects.hash(name, surname, gender, birthDate.getMonth(), birthDate.getYear(), birthDate.getDayOfMonth());
     }
 
     @Override
@@ -44,7 +47,7 @@ public class Person {
         }
         if (obj instanceof Person) {
             if (obj.hashCode() == hashCode()) {
-                return ((Person) obj).name.equals(name) && ((Person) obj).surname.equals(surname) && ((Person) obj).date.equals(date) && ((Person) obj).gender.equals(gender);
+                return ((Person) obj).name.equals(name) && ((Person) obj).surname.equals(surname) && ((Person) obj).birthDate.equals(birthDate) && ((Person) obj).gender.equals(gender);
             }
         }
         return false;
@@ -52,6 +55,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return name + " " + surname + " " + date + " " + gender;
+        return name + " " + surname + " " + birthDate + " " + gender;
     }
 }
