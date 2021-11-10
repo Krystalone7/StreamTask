@@ -2,7 +2,6 @@
 import org.example.streamtask.classes.Field;
 import org.example.streamtask.classes.Gender;
 import org.example.streamtask.classes.Person;
-import org.example.streamtask.classes.SortFactor;
 import org.example.streamtask.functions.FilterPerson;
 import org.example.streamtask.functions.Pagination;
 import org.example.streamtask.functions.SortPerson;
@@ -137,6 +136,7 @@ class PersonTest {
         // Мы обычно используем org.assertj.core.api.AbstractIterableAssert#containsExactlyInAnyOrderElementsOf для сравнения
         // коллекций без учета их порядка, посмотри также еще и метод сравнения, который учитывает порядок элементов
         assertIterableEquals(expected, paginated);
+
     }
 
 }
