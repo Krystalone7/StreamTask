@@ -2,7 +2,6 @@ package org.example.streamtask.functions;
 
 import org.example.streamtask.classes.Field;
 import org.example.streamtask.classes.Person;
-import org.example.streamtask.classes.SortFactor;
 
 import java.util.Comparator;
 import java.util.List;
